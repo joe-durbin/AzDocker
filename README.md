@@ -14,7 +14,7 @@ A comprehensive Docker-based environment for Azure Active Directory (Azure AD) a
 ### Installation
 
 1. Clone or download this repository
-2. Ensure `starship.toml` is present in the project root
+2. Ensure `config_files/starship.toml` is present (it should be included in the repository)
 3. Make the setup script executable:
 
 ```bash
@@ -82,6 +82,8 @@ These tools are installed via `pipx` and available globally in your PATH:
 | **impacket** | Collection of Python classes for working with network protocols |
 | **seamlesspass** | Password spraying and credential testing tool |
 | **roadtx** | ROADtools extension for token exchange and manipulation |
+| **prowler** | Cloud security tool for AWS, Azure, and GCP security assessment |
+| **scoutsuite** | Multi-cloud security auditing tool for AWS, Azure, and GCP |
 
 ### PowerShell Modules
 
@@ -134,11 +136,10 @@ Located in `/opt/pentest-azure/`:
 .
 ├── Dockerfile              # Main container definition
 ├── docker-compose.yml      # Multi-container orchestration
-├── starship.toml          # Starship prompt configuration
+├── config_files/           # Configuration files directory
+│   └── starship.toml      # Starship prompt configuration
 ├── azpentest.sh           # Setup and management script
 ├── README.md              # This file
-├── .azpentest-containers  # Container tracking file (created by azpentest.sh)
-├── .azpentest-images      # Image ID tracking file (created by azpentest.sh)
 ├── data/                  # Persistent data directory (created on first run)
 └── bloodhound/            # BloodHound CE installation directory (created by azpentest.sh)
 ```
@@ -158,7 +159,6 @@ Located in `/opt/pentest-azure/`:
 - **Bash completion**: Enabled for Azure CLI and other tools
 - **Persistent storage**: Data directories mounted for tool outputs
 - **Pre-configured**: All tools ready to use immediately
-- **Smart cleanup**: The `azpentest.sh` script tracks containers and images it creates, ensuring safe and complete removal with the `purge` command
 - **Integrated management**: Single script manages both BloodHound CE and cloud-tools container
 
 ## 📝 Usage Examples
@@ -206,7 +206,7 @@ To add additional tools, modify the `Dockerfile`:
 ### Modifying Shell Configuration
 
 - Bash: Edit the `.bashrc` section in the Dockerfile
-- Starship: Edit `starship.toml` in the project root
+- Starship: Edit `config_files/starship.toml` and rebuild the container
 
 **Note:** PowerShell modules are not auto-loaded. Import them manually in your PowerShell sessions as needed.
 
