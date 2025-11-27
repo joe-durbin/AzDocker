@@ -1,0 +1,10 @@
+services:
+  cloud-tools:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cloud-tools
+    volumes:
+      - ./data:/data
+    tty: true
+    stdin_open: true
