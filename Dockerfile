@@ -52,14 +52,16 @@ RUN curl -sSL -o /tmp/packages-microsoft-prod.deb \
     rm -rf /var/lib/apt/lists/*
 
 # Install Azure and cloud security tools via pipx
-# azure-cli, graphspy, ROADtools, FindMeAccess, impacket, seamlesspass, roadtx
+# azure-cli, graphspy, ROADtools, FindMeAccess, impacket, seamlesspass, roadtx, prowler, scoutsuite
 RUN pipx install azure-cli && \
     pipx install graphspy && \
     pipx install "git+https://github.com/dirkjanm/ROADtools" --include-deps && \
     pipx install "git+https://github.com/absolomb/FindMeAccess" --include-deps && \
     pipx install impacket && \
     pipx install seamlesspass && \
-    pipx install roadtx
+    pipx install roadtx && \
+    pipx install prowler && \
+    pipx install scoutsuite
 
 # Enable bash completion for az CLI
 RUN az completion bash > /etc/bash_completion.d/azure-cli || true
@@ -119,9 +121,9 @@ RUN useradd -m -s /bin/bash pentest
 RUN curl -sS https://starship.rs/install.sh | sh -s -- -y
 
 # Copy starship.toml from build context into pentest's config
-# (Place starship.toml next to this Dockerfile on the host)
+# (Place starship.toml in config_files/ directory next to this Dockerfile)
 RUN mkdir -p /home/pentest/.config
-COPY starship.toml /home/pentest/.config/starship.toml
+COPY config_files/starship.toml /home/pentest/.config/starship.toml
 
 # Bash RC for 'pentest': bash-completion, Starship, and aliases
 RUN printf '\n# Enable bash completion (including az from /etc/bash_completion.d)\n' >> /home/pentest/.bashrc && \
