@@ -54,12 +54,12 @@ RUN curl -sSL -o /tmp/packages-microsoft-prod.deb \
 
 # Install jwt-cli from GitHub releases
 RUN JWT_CLI_VERSION=$(curl -s https://api.github.com/repos/mike-engel/jwt-cli/releases/latest | jq -r '.tag_name') && \
-    curl -sSL -o /tmp/jwt-cli.tar.gz \
-      "https://github.com/mike-engel/jwt-cli/releases/download/${JWT_CLI_VERSION}/jwt-cli-${JWT_CLI_VERSION}-x86_64-unknown-linux-gnu.tar.gz" && \
-    tar -xzf /tmp/jwt-cli.tar.gz -C /tmp && \
+    curl -sSL -o /tmp/jwt-linux.tar.gz \
+      "https://github.com/mike-engel/jwt-cli/releases/download/${JWT_CLI_VERSION}/jwt-linux.tar.gz" && \
+    tar -xzf /tmp/jwt-linux.tar.gz -C /tmp && \
     mv /tmp/jwt /usr/bin/jwt && \
     chmod +x /usr/bin/jwt && \
-    rm -f /tmp/jwt-cli.tar.gz
+    rm -f /tmp/jwt-linux.tar.gz
 
 # Install Azure and cloud security tools via pipx
 # azure-cli, graphspy, ROADtools, FindMeAccess, impacket, seamlesspass, roadtx, prowler, scoutsuite
