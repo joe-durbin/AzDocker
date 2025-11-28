@@ -59,7 +59,7 @@ After running `./azpentest.sh start`, you can access the cloud-tools container:
 docker exec -it cloud-tools bash
 ```
 
-The container runs as the non-root user `pentest` with all tools pre-configured and ready to use.
+The container runs as the non-root user `pentest` with all tools pre-configured and ready to use. The `pentest` user has passwordless sudo access for administrative tasks when needed.
 
 **Alternative:** If you prefer to manage containers manually, you can use docker-compose directly:
 
@@ -84,6 +84,12 @@ These tools are installed via `pipx` and available globally in your PATH:
 | **roadtx** | ROADtools extension for token exchange and manipulation |
 | **prowler** | Cloud security tool for AWS, Azure, and GCP security assessment |
 | **scoutsuite** | Multi-cloud security auditing tool for AWS, Azure, and GCP |
+
+### System Tools
+
+| Tool | Description |
+|------|-------------|
+| **jwt** | Command-line tool for encoding, decoding, and validating JSON Web Tokens (JWT) |
 
 ### PowerShell Modules
 
@@ -122,6 +128,7 @@ Located in `/opt/pentest-azure/`:
 | **Oh365UserFinder** | Office 365 user discovery and enumeration tool |
 | **MSOLSpray** | Microsoft Online Services password spraying tool |
 | **Graphpython** | Python library for Microsoft Graph API interactions |
+| **uwg** | Unified Web Gateway enumeration and testing tool |
 | **exfil_exchange_mail.py** | Exchange Online mail exfiltration script |
 
 ### Ruby Tools
@@ -147,6 +154,7 @@ Located in `/opt/pentest-azure/`:
 ## 🛠️ Tool Locations
 
 - **pipx tools**: `/opt/pipx/bin/` (in PATH)
+- **System binaries**: `/usr/bin/` (e.g., `jwt`)
 - **Python tools**: `/opt/pentest-azure/`
 - **PowerShell modules**: Installed system-wide, import manually when needed
 - **Ruby gems**: Available via `gem` command
@@ -155,6 +163,7 @@ Located in `/opt/pentest-azure/`:
 ## 💡 Features
 
 - **Non-root execution**: Container runs as `pentest` user for security
+- **Passwordless sudo**: The `pentest` user has passwordless sudo access for administrative tasks
 - **Enhanced shell**: Starship prompt with git integration and helpful aliases
 - **Bash completion**: Enabled for Azure CLI and other tools
 - **Persistent storage**: Data directories mounted for tool outputs
@@ -191,6 +200,22 @@ Get-MgUser
 ```bash
 cd /opt/pentest-azure/TokenTacticsV2
 python3 token_tactics.py --help
+```
+
+### JWT CLI
+
+```bash
+jwt decode <token>
+jwt encode --secret=<secret> --payload='{"sub":"user123"}'
+```
+
+### Administrative Tasks
+
+The `pentest` user has passwordless sudo access:
+
+```bash
+sudo apt-get update
+sudo systemctl status <service>
 ```
 
 ## 🔧 Customization

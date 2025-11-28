@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y \
     eza \
     nano \
     vim \
+    sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # System-wide pipx location
@@ -50,6 +51,15 @@ RUN curl -sSL -o /tmp/packages-microsoft-prod.deb \
     apt-get update && \
     apt-get install -y powershell && \
     rm -rf /var/lib/apt/lists/*
+
+# Install jwt-cli from GitHub releases
+RUN JWT_CLI_VERSION=$(curl -s https://api.github.com/repos/mike-engel/jwt-cli/releases/latest | jq -r '.tag_name') && \
+    curl -sSL -o /tmp/jwt-cli.tar.gz \
+      "https://github.com/mike-engel/jwt-cli/releases/download/${JWT_CLI_VERSION}/jwt-cli-${JWT_CLI_VERSION}-x86_64-unknown-linux-gnu.tar.gz" && \
+    tar -xzf /tmp/jwt-cli.tar.gz -C /tmp && \
+    mv /tmp/jwt /usr/bin/jwt && \
+    chmod +x /usr/bin/jwt && \
+    rm -f /tmp/jwt-cli.tar.gz
 
 # Install Azure and cloud security tools via pipx
 # azure-cli, graphspy, ROADtools, FindMeAccess, impacket, seamlesspass, roadtx, prowler, scoutsuite
@@ -82,7 +92,8 @@ RUN git clone https://github.com/Gerenios/AADInternals "$INSTALL_DIR/AADInternal
     git clone https://github.com/0xZDH/Omnispray "$INSTALL_DIR/Omnispray" && \
     git clone https://github.com/dievus/Oh365UserFinder "$INSTALL_DIR/Oh365UserFinder" && \
     git clone https://github.com/dafthack/MSOLSpray "$INSTALL_DIR/MSOLSpray" && \
-    git clone https://github.com/mlcsec/Graphpython "$INSTALL_DIR/Graphpython"
+    git clone https://github.com/mlcsec/Graphpython "$INSTALL_DIR/Graphpython" && \
+    git clone https://github.com/hac01/uwg "$INSTALL_DIR/uwg"
 
 # Install Graphpython into the system Python
 # Note: --break-system-packages is required for Ubuntu 24.04 (PEP 668)
@@ -113,6 +124,10 @@ RUN pwsh -NoLogo -NoProfile -Command \
 
 # ----- Create non-root user 'pentest' -----
 RUN useradd -m -s /bin/bash pentest
+
+# Configure passwordless sudo for pentest user
+RUN echo "pentest ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/pentest && \
+    chmod 0440 /etc/sudoers.d/pentest
 
 # PowerShell modules are installed but not auto-loaded to improve startup time
 # Import modules manually when needed: Import-Module Az, Import-Module Microsoft.Graph, Import-Module AADInternals
