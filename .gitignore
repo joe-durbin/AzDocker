@@ -1,0 +1,148 @@
+# -----------------------------
+# OS FILES
+# -----------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+
+# -----------------------------
+# EDITORS & IDEs
+
+# -----------------------------
+
+# VS Code
+.vscode/
+.history/
+*.code-workspace
+
+# IntelliJ / JetBrains
+.idea/
+*.iml
+out/
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+
+# -----------------------------
+# LANGUAGE / TOOLING
+
+# -----------------------------
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+.env
+.venv/
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-lock.yaml
+
+# Go
+bin/
+pkg/
+*.exe
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+target/
+build/
+
+# C/C++
+*.o
+*.a
+*.so
+*.dll
+*.lib
+*.out
+
+# Rust
+target/
+Cargo.lock
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+
+# Ruby
+.bundle/
+vendor/bundle/
+log/
+tmp/
+
+# -----------------------------
+# VERSION CONTROL
+# -----------------------------
+*.orig
+*.rej
+
+# -----------------------------
+# ENV / SECRETS
+# -----------------------------
+.env
+.env.*
+secret.*
+secrets/
+*.key
+*.pem
+
+# -----------------------------
+# LOGS / TEMP
+# -----------------------------
+*.log
+logs/
+temp/
+tmp/
+
+# -----------------------------
+# BACKUPS
+# -----------------------------
+*.bak
+*.tmp
+*.old
+*.backup
+*.swp
+
+# -----------------------------
+# DOCKER
+# -----------------------------
+*.pid
+docker-compose.override.yml
+
+# -----------------------------
+# MISC BUILD OUTPUT
+# -----------------------------
+dist/
+build/
+.cache/
+coverage/
+
