@@ -66,7 +66,7 @@ RUN AZUREHOUND_VERSION=$(curl -s https://api.github.com/repos/SpecterOps/AzureHo
     curl -sSL -o /tmp/azurehound.zip \
       "https://github.com/SpecterOps/AzureHound/releases/download/${AZUREHOUND_VERSION}/AzureHound_${AZUREHOUND_VERSION}_linux_amd64.zip" && \
     unzip -q /tmp/azurehound.zip -d /tmp && \
-    mv /tmp/AzureHound /usr/bin/azurehound && \
+    mv /tmp/azurehound /usr/bin/azurehound && \
     chmod +x /usr/bin/azurehound && \
     rm -f /tmp/azurehound.zip
 
