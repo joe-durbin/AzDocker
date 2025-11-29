@@ -61,6 +61,15 @@ RUN JWT_CLI_VERSION=$(curl -s https://api.github.com/repos/mike-engel/jwt-cli/re
     chmod +x /usr/bin/jwt && \
     rm -f /tmp/jwt-linux.tar.gz
 
+# Install AzureHound collector binary (compatible with BloodHound CE)
+RUN AZUREHOUND_VERSION=$(curl -s https://api.github.com/repos/SpecterOps/AzureHound/releases/latest | jq -r '.tag_name') && \
+    curl -sSL -o /tmp/azurehound.zip \
+      "https://github.com/SpecterOps/AzureHound/releases/download/${AZUREHOUND_VERSION}/AzureHound_${AZUREHOUND_VERSION}_linux_amd64.zip" && \
+    unzip -q /tmp/azurehound.zip -d /tmp && \
+    mv /tmp/AzureHound /usr/bin/azurehound && \
+    chmod +x /usr/bin/azurehound && \
+    rm -f /tmp/azurehound.zip
+
 # Install Azure and cloud security tools via pipx
 # azure-cli, graphspy, ROADtools, FindMeAccess, impacket, seamlesspass, roadtx, prowler, scoutsuite
 RUN pipx install azure-cli && \

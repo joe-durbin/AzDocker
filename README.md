@@ -90,6 +90,7 @@ These tools are installed via `pipx` and available globally in your PATH:
 | Tool | Description |
 |------|-------------|
 | **jwt** | Command-line tool for encoding, decoding, and validating JSON Web Tokens (JWT) |
+| **azurehound** | AzureHound collector for BloodHound - collects Azure AD data for graph analysis |
 
 ### PowerShell Modules
 
@@ -154,7 +155,7 @@ Located in `/opt/pentest-azure/`:
 ## 🛠️ Tool Locations
 
 - **pipx tools**: `/opt/pipx/bin/` (in PATH)
-- **System binaries**: `/usr/bin/` (e.g., `jwt`)
+- **System binaries**: `/usr/bin/` (e.g., `jwt`, `azurehound`)
 - **Python tools**: `/opt/pentest-azure/`
 - **PowerShell modules**: Installed system-wide, import manually when needed
 - **Ruby gems**: Available via `gem` command
@@ -169,6 +170,7 @@ Located in `/opt/pentest-azure/`:
 - **Persistent storage**: Data directories mounted for tool outputs
 - **Pre-configured**: All tools ready to use immediately
 - **Integrated management**: Single script manages both BloodHound CE and cloud-tools container
+- **BloodHound integration**: AzureHound collector included for Azure AD graph analysis
 
 ## 📝 Usage Examples
 
@@ -208,6 +210,26 @@ python3 token_tactics.py --help
 jwt decode <token>
 jwt encode --secret=<secret> --payload='{"sub":"user123"}'
 ```
+
+### AzureHound (BloodHound Collector)
+
+AzureHound collects Azure AD data for import into BloodHound CE:
+
+```bash
+# Authenticate and collect data
+azurehound list -u <username> -p <password> --tenant <tenant-id>
+
+# Or use service principal
+azurehound list --client-id <client-id> --client-secret <secret> --tenant <tenant-id>
+
+# Output to JSON file for BloodHound import
+azurehound list -u <username> -p <password> --tenant <tenant-id> -o azure_data.json
+
+# Import into BloodHound CE (from host machine)
+./bloodhound/bloodhound-cli ingest -d azure_data.json
+```
+
+**Note**: AzureHound is compatible with BloodHound Community Edition and collects the same data format as the official BloodHound collectors.
 
 ### Administrative Tasks
 
@@ -267,6 +289,8 @@ To add additional tools, modify the `Dockerfile`:
 
 - [Azure AD Security Best Practices](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/security-best-practices)
 - [ROADtools Documentation](https://github.com/dirkjanm/ROADtools)
+- [AzureHound Documentation](https://github.com/SpecterOps/AzureHound)
+- [BloodHound Community Edition](https://bloodhound.specterops.io/)
 
 ## ⚠️ Disclaimer
 
